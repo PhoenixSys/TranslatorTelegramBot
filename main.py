@@ -54,7 +54,7 @@ def contact(message):
     img = Image.open(f'{fileID}.jpg')
     result = pytesseract.image_to_string(img)
     print(result)
-    translation = Translator().translate("hello", dest="fa")
+    translation = Translator().translate(result, dest="fa")
     print(translation.text)
     bot.send_message(message.chat.id, translation.text)
 
