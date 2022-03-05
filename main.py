@@ -54,10 +54,9 @@ def contact(message):
     img = Image.open(f'{fileID}.jpg')
     result = pytesseract.image_to_string(img)
     print(result)
-    p = Translator()
-    p_translated = p.translate(result, dest='french')
-    translated = str(p_translated.text)
-    bot.send_message(message.chat.id, 'Your Photo Received !')
+    translation = Translator().translate("hello", dest="fa")
+    print(translation.text)
+    bot.send_message(message.chat.id, translation.text)
 
 
 bot.polling()
