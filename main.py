@@ -13,7 +13,7 @@ def service1_command(message):
     bot.send_message(message.chat.id, f"Hello {bot.user.first_name}")
 
 
-@bot.message_handler(commands=["login"])
+@bot.message_handler(commands=["register"])
 def service1_command(message):
     keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
     button_phone = types.KeyboardButton(text="Send phone",
@@ -27,7 +27,7 @@ def contact(message):
     if message.contact is not None:
         if message.from_user.id == message.contact.user_id:
             DataBaseManagerUser.insert_user_data(user_id=message.from_user.id, phone=message.contact.phone_number)
-            bot.send_message(message.chat.id, 'Successful')
+            bot.send_message(message.chat.id, f'Successful | {message.contact.phone_number} Registered')
         else:
             bot.send_message(message.chat.id, 'Failed ! Please Send Your Own Number !')
 
@@ -36,9 +36,9 @@ def contact(message):
 def check_login(message):
     user_id = message.from_user.id
     if DataBaseManagerUser.check_login(user_id):
-        bot.send_message(message.chat.id, 'You Are Logged In')
+        bot.send_message(message.chat.id, 'You Are Registered')
     else:
-        bot.send_message(message.chat.id, 'Please Use /login for login in this bot')
+        bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
 
 
 bot.polling()
