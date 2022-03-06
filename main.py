@@ -4,6 +4,7 @@ from PIL import Image
 import pytesseract
 from googletrans import Translator
 from telebot import types
+import os
 
 TOKEN = "5272226190:AAHvQaAECllfCEFQqpodfspZo1GCi5dw8YE"
 bot = telebot.TeleBot(token=TOKEN)
@@ -53,9 +54,8 @@ def contact(message):
         new_file.write(downloaded_file)
     img = Image.open(f'{fileID}.jpg')
     result = pytesseract.image_to_string(img)
-    print(result)
     translation = Translator().translate(result, dest="fa")
-    print(translation.text)
+    os.system(f"rm -rf {fileID}.jpg")
     bot.send_message(message.chat.id, translation.text)
 
 
