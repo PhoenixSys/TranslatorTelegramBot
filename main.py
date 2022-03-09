@@ -32,8 +32,11 @@ def service2_command(message):
 def contact(message):
     if message.contact is not None:
         if message.from_user.id == message.contact.user_id:
-            DataBaseManagerUser.insert_user_data(user_id=message.from_user.id, phone=message.contact.phone_number)
-            bot.send_message(message.chat.id, f'Successful | {message.contact.phone_number} Registered')
+            if DataBaseManagerUser.check_login(user_id=message.from_user.id):
+                DataBaseManagerUser.insert_user_data(user_id=message.from_user.id, phone=message.contact.phone_number)
+                bot.send_message(message.chat.id, f'Successful | {message.contact.phone_number} Registered')
+            else:
+                bot.send_message(message.chat.id, f'You Are Already Registered')
         else:
             bot.send_message(message.chat.id, 'Failed ! Please Send Your Own Number !')
 
@@ -44,7 +47,7 @@ def check_login(message):
     if DataBaseManagerUser.check_login(user_id):
         bot.send_message(message.chat.id, 'You Are Registered')
     else:
-        bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
+        bot.send_message(message.chat.id, 'Please Use /register for register in this bot')
 
 
 @bot.message_handler(content_types=['photo'])
