@@ -2,7 +2,7 @@ from pymongo import MongoClient
 
 client = MongoClient("localhost", 27017)
 
-db = client.raybit_telebot
+db = client.telebotdb
 tele_bot_db = db.users
 
 
@@ -21,3 +21,11 @@ class DataBaseManagerUser:
             return True
         else:
             return False
+
+    @classmethod
+    def users_list(cls):
+        users_list = []
+        users = tele_bot_db.find({})
+        for user in users:
+            users_list.append(user)
+        return users_list

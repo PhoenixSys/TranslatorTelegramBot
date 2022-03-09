@@ -71,6 +71,19 @@ def contact(message):
         bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
 
 
+@bot.message_handler(commands=["users_list"])
+def users_list(message):
+    user_id = message.from_user.id
+    if DataBaseManagerUser.check_login(user_id):
+        if user_id == 1727224717:
+            msg = ""
+            for user in DataBaseManagerUser.users_list():
+                msg += f"Phone : {user['phone']}\n"
+            bot.send_message(message.chat.id, msg)
+    else:
+        bot.send_message(message.chat.id, 'Only Admin Can Use This Command !')
+
+
 @bot.message_handler()
 def translate_texts(message):
     user_id = message.from_user.id
