@@ -32,7 +32,7 @@ def service2_command(message):
 def contact(message):
     if message.contact is not None:
         if message.from_user.id == message.contact.user_id:
-            if DataBaseManagerUser.check_login(user_id=message.from_user.id):
+            if not DataBaseManagerUser.check_login(user_id=message.from_user.id):
                 DataBaseManagerUser.insert_user_data(user_id=message.from_user.id, phone=message.contact.phone_number)
                 bot.send_message(message.chat.id, f'Successful | {message.contact.phone_number} Registered')
             else:
