@@ -75,8 +75,16 @@ def contact(message):
 def translate_texts(message):
     user_id = message.from_user.id
     if DataBaseManagerUser.check_login(user_id):
-        lang = langid.classify(f"{message.text}")
-        bot.send_message(message.chat.id, f"{lang[0]}")
+        lang = langid.classify(f"{message.text}")[0]
+        if lang == "en":
+            translation = Translator().translate(message.text, dest="fa")
+            bot.send_message(message.chat.id, f"{translation.text}")
+        else:
+            try:
+                translation = Translator().translate(message.txt, dest="en")
+                bot.send_message(message.chat.id, f"{translation.text}")
+            except:
+                bot.send_message(message.chat.id, f"I Can Not Translate This Text ! :/")
     else:
         bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
 
