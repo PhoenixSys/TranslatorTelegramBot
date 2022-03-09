@@ -56,9 +56,12 @@ def contact(message):
             new_file.write(downloaded_file)
         img = Image.open(f'{fileID}.jpg')
         result = pytesseract.image_to_string(img)
-        translation = Translator().translate(result, dest="fa")
-        os.system(f"rm -rf {fileID}.jpg")
-        bot.send_message(message.chat.id, translation.text)
+        if result is not None:
+            translation = Translator().translate(result, dest="fa")
+            os.system(f"rm -rf {fileID}.jpg")
+            bot.send_message(message.chat.id, translation.text)
+        else:
+            bot.send_message(message.chat.id, "Could Not Find Any Text In This Image")
     else:
         bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
 
