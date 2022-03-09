@@ -4,9 +4,10 @@ from PIL import Image
 import pytesseract
 from googletrans import Translator
 from telebot import types
+from textblob import TextBlob
 import os
 
-TOKEN = "5272226190:AAHvQaAECllfCEFQqpodfspZo1GCi5dw8YE"
+TOKEN = "5269440758:AAGwPGbPL5qLbHz4bVDWxRRYHYqLswqurZ0"
 bot = telebot.TeleBot(token=TOKEN)
 
 print("started !")
@@ -14,7 +15,7 @@ print("started !")
 
 @bot.message_handler(commands=["start"])
 def service1_command(message):
-    bot.send_message(message.chat.id, f"Hello {bot.user.first_name}")
+    bot.send_message(message.chat.id, f"Hello {message.from_user.first_name}")
 
 
 @bot.message_handler(commands=["register"])
@@ -65,6 +66,17 @@ def contact(message):
                 bot.send_message(message.chat.id, "Could Not Find Any Text In This Image")
         except:
             bot.send_message(message.chat.id, "Could Not Find Any Text In This Image")
+    else:
+        bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
+
+
+@bot.message_handler()
+def translate_texts(message):
+    user_id = message.from_user.id
+    if DataBaseManagerUser.check_login(user_id):
+        b = TextBlob(f"{message.data}")
+        b.detect_language()
+        bot.send_message(message.chat.id, 'You Are Registered')
     else:
         bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
 
