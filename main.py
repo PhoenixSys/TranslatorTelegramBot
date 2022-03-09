@@ -1,5 +1,6 @@
 from mongodb_manager import DataBaseManagerUser
 import telebot
+import langid
 from PIL import Image
 import pytesseract
 from googletrans import Translator
@@ -74,9 +75,8 @@ def contact(message):
 def translate_texts(message):
     user_id = message.from_user.id
     if DataBaseManagerUser.check_login(user_id):
-        b = TextBlob(f"{message.data}")
-        b.detect_language()
-        bot.send_message(message.chat.id, 'You Are Registered')
+        lang = langid.classify(f"{message.text}")
+        bot.send_message(message.chat.id, f"{lang[0]}")
     else:
         bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
 
