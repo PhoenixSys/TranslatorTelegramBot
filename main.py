@@ -80,11 +80,9 @@ def translate_texts(message):
             translation = Translator().translate(message.text, dest="fa")
             bot.send_message(message.chat.id, f"{translation.text}")
         else:
-            try:
-                translation = Translator().translate(message.txt, dest="en")
-                bot.send_message(message.chat.id, f"{translation.text}")
-            except:
-                bot.send_message(message.chat.id, f"I Can Not Translate This Text ! :/")
+            translation = Translator().translate(message.txt, dest="en")
+            bot.send_message(message.chat.id, f"{translation.text}")
+            bot.send_message(message.chat.id, f"I Can Not Translate This Text ! :/")
     else:
         bot.send_message(message.chat.id, 'Please Use /register for login in this bot')
 
