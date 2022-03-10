@@ -19,6 +19,12 @@ def service1_command(message):
     bot.send_message(message.chat.id, f"Hello {message.from_user.first_name}")
 
 
+@bot.message_handler(commands=["help"])
+def service1_command(message):
+    bot.send_message(message.chat.id,
+                     f"You Can Use /register To Register In This Bot & After Register , You Can Send Your Texts Or Images To Bot For Translate !")
+
+
 @bot.message_handler(commands=["register"])
 def service2_command(message):
     keyboard = types.ReplyKeyboardMarkup(row_width=1, resize_keyboard=True)
@@ -83,8 +89,16 @@ def users_list(message):
             for user in DataBaseManagerUser.users_list():
                 msg += f"Phone : {user['phone']}\n"
             bot.send_message(message.chat.id, msg)
+        else:
+            bot.send_message(message.chat.id, 'Only Admin Can Use This Command !')
     else:
         bot.send_message(message.chat.id, 'Only Admin Can Use This Command !')
+
+
+# @bot.message_handler()
+# def service1_command(message):
+#     if message.text.lower() == "fuck":
+#         bot.send_message(message.chat.id, "You Are Bad Boy/Girl !")
 
 
 @bot.message_handler()
@@ -93,6 +107,7 @@ def translate_texts(message):
     if DataBaseManagerUser.check_login(user_id):
         lang = langid.classify(f"{message.text}")[0]
         if lang == "en":
+            # Here
             translation = Translator().translate(message.text, dest="fa")
             bot.send_message(message.chat.id, f"{translation.text}")
         else:
