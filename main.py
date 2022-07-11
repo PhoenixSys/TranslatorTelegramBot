@@ -8,7 +8,9 @@ from telebot import types
 from textblob import TextBlob
 import os
 
-TOKEN = "5269440758:AAGwPGbPL5qLbHz4bVDWxRRYHYqLswqurZ0"
+# change token
+# TOKEN = "5269440758:AAGwPGbPL5qLbHz4bVDWxRRYHYqLswqurZ0"
+TOKEN = "5538490908:AAHe4DsurRWBATGdRwEE8vbvrbhvBtOKRu8"
 bot = telebot.TeleBot(token=TOKEN)
 
 print("started !")
@@ -93,12 +95,6 @@ def users_list(message):
             bot.send_message(message.chat.id, 'Only Admin Can Use This Command !')
     else:
         bot.send_message(message.chat.id, 'Only Admin Can Use This Command !')
-
-
-# @bot.message_handler()
-# def service1_command(message):
-#     if message.text.lower() == "fuck":
-#         bot.send_message(message.chat.id, "You Are Bad Boy/Girl !")
 
 
 @bot.message_handler()
